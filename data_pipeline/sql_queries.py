@@ -75,4 +75,4 @@ for name, query in queries.items():
 # Close connection
 conn.close()
 
-print("\nAll SQL queries executed successfully!")s
+print("\nAll SQL queries executed successfully!")
