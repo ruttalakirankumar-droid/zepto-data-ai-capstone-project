@@ -73,3 +73,7 @@ The project demonstrates:
 - SQL JOIN between two tables
 - Reading SQL results using pandas
 - Comparing SQL JOIN and pandas merge results
+
+## Module 1 Completion
+
+This data pipeline successfully scrapes book data, cleans and converts the data, stores it in a SQLite database, executes SQL queries, and reproduces a JOIN using pandas.
