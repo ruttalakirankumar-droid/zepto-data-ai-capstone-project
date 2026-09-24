@@ -1,4 +1,5 @@
 import sqlite3
+import pandas as pd
 
 # Create/connect to SQLite database
 conn = sqlite3.connect("books.db")
@@ -32,6 +33,47 @@ CREATE TABLE IF NOT EXISTS books (
 conn.commit()
 
 print("Database and tables created successfully!")
+# Load cleaned data
+df = pd.read_csv("cleaned_books.csv")
 
+print("Cleaned data loaded successfully!")
+print(f"Total books: {len(df)}")
+# Insert unique categories
+categories = df["category"].unique()
+
+for category in categories:
+    cursor.execute(
+        "INSERT OR IGNORE INTO categories (category_name) VALUES (?)",
+        (category,)
+    )
+
+conn.commit()
+
+print("Categories inserted successfully!")
+# Get category IDs
+category_ids = {}
+
+cursor.execute("SELECT category_id, category_name FROM categories")
+
+for category_id, category_name in cursor.fetchall():
+    category_ids[category_name] = category_id
+    # Insert books into the books table
+for _, row in df.iterrows():
+    cursor.execute("""
+        INSERT INTO books
+        (title, price_gbp, price_inr, rating, in_stock, category_id)
+        VALUES (?, ?, ?, ?, ?, ?)
+    """, (
+        row["title"],
+        row["price_gbp"],
+        row["price_inr"],
+        row["rating"],
+        row["in_stock"],
+        category_ids[row["category"]]
+    ))
+
+conn.commit()
+
+print("Books inserted successfully!")
 # Close connection
 conn.close()

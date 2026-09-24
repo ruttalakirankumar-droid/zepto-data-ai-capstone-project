@@ -110,9 +110,10 @@ def main():
 
     # Save raw scraped data
     df.to_csv(
-        "data_pipeline/raw_books.csv",
-        index=False
-    )
+    "raw_books.csv",
+    index=False
+)
+
 
     print("\nScraping completed!")
     print(f"Total books scraped: {len(df)}")

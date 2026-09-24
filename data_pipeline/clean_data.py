@@ -2,7 +2,21 @@ import pandas as pd
 
 
 # Read the scraped data
-df = pd.read_csv("data_pipeline/raw_books.csv")
+df = pd.read_csv("raw_books.csv")
+# Display basic information
+print("Dataset Shape:", df.shape)
+
+print("\nColumn Names:")
+print(df.columns)
+
+print("\nFirst 5 Rows:")
+print(df.head())
+
+print("\nMissing Values:")
+print(df.isnull().sum())
+
+print("\nDuplicate Rows:")
+print(df.duplicated().sum())
 
 # Remove £ symbol and convert price to float
 df["price_gbp"] = (
@@ -50,7 +64,7 @@ clean_df = df[
 
 # Save cleaned data
 clean_df.to_csv(
-    "data_pipeline/cleaned_books.csv",
+    "cleaned_books.csv",
     index=False
 )
 
@@ -62,3 +76,5 @@ print(clean_df.head())
 
 print("\nData types:")
 print(clean_df.dtypes)
+print("\nCategories:")
+print(clean_df["category"].value_counts())
